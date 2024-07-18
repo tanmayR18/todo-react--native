@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet,
   Modal,
-  Pressable,
 } from "react-native";
 
 const InputContainer = ({ setTodoList, modal, setModal }) => {

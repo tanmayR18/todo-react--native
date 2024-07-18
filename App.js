@@ -2,13 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import {
   Button,
-  Pressable,
-  ScrollView,
   StyleSheet,
-  Text,
-  TextInput,
-  Touchable,
-  TouchableOpacity,
   View,
 } from "react-native";
 import InputContainer from "./components/inputContainer";
@@ -19,13 +13,14 @@ export default function App() {
   const [ modal, setModal ] = useState(false)
 
   return (
-    <View style={styles.mainContainer}>
-        <Button onPress={() => setModal(true)} title="Add Task" />
-
-      <InputContainer setModal={setModal} modal={modal} setTodoList={setTodoList}/>
-      <TaskContainer todoList={todoList} setTodoList={setTodoList}/>
-      
-    </View>
+    <>
+        <StatusBar />
+        <View style={styles.mainContainer}>
+            <Button onPress={() => setModal(true)} title="Add Task" />
+            <InputContainer setModal={setModal} modal={modal} setTodoList={setTodoList}/>
+            <TaskContainer todoList={todoList} setTodoList={setTodoList}/>
+        </View>
+    </>
   );
 }
 
