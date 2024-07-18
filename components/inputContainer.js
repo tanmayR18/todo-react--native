@@ -1,52 +1,73 @@
 import { useState } from "react";
 import {
-    Button,
-    TextInput,
-    View,
-    StyleSheet
-  } from "react-native";
+  Button,
+  TextInput,
+  View,
+  StyleSheet,
+  Modal,
+  Pressable,
+} from "react-native";
 
-const InputContainer = ({setTodoList}) => {
+const InputContainer = ({ setTodoList, modal, setModal }) => {
+  const [todo, setTodo] = useState("");
 
-    const [todo, setTodo] = useState("");
+  const textChangeHandler = (value) => {
+    setTodo(value);
+  };
 
-    const textChangeHandler = (value) => {
-        setTodo(value);
-      };
+  const addTodo = () => {
+    setTodoList((prevState) => [...prevState, { text: todo }]);
+    setModal(false)
+    setTodo("");
+  };
 
-      const addTodo = () => {
-        setTodoList((prevState) => [...prevState, {text:todo}]);
-        setTodo("");
-      };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Enter your tasks"
-        onChangeText={textChangeHandler}
-        value={todo}
-      />
-      <Button title={"Add"} onPress={addTodo} />
-    </View>
+    <Modal animationType="slide" visible={modal} style={styles.modal}>
+      <View style={styles.outerView}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter your tasks"
+            onChangeText={textChangeHandler}
+            value={todo}
+          />
+        </View>
+        <View style={styles.buttons}>
+          <Button onPress={addTodo} title="Add" />
+          <Button onPress={() => setModal(false)} title="Cancel" />
+        </View>
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-    inputContainer: {
-        flexDirection: "row",
-        paddingBottom: 40,
-        borderBottomWidth: 2,
-      },
-    
-      textInput: {
-        flex: 1,
-        borderWidth: 1,
-        marginRight: 15,
-        padding: 4,
-        paddingLeft: 10,
-        borderRadius: 6,
-      },
-})
+  inputContainer: {
+    flexDirection: "row",
+    paddingBottom: 20,
+    alignItems: "center",
+    padding: 16,
+  },
+
+  textInput: {
+    flex: 1,
+    borderWidth: 1,
+    padding: 4,
+    paddingLeft: 10,
+    borderRadius: 6,
+  },
+  modal: {},
+  outerView: {
+    padding: 16,
+    height: "100%",
+    justifyContent: "center",
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 20,
+  },
+});
 
 export default InputContainer;
